@@ -46,10 +46,12 @@ class LinkedList {
     if (this.length === 0) {
       this.head = newNode;
       this.tail = newNode;
+      this.length++;
     } else {
       if (this.tail) {
         this.tail.next = newNode;
         this.tail = newNode;
+        this.length++;
       }
     }
   }
@@ -157,7 +159,27 @@ class LinkedList {
   contains(value: string) {}
 
   // Reverse the linked list
-  reverse() {}
+  reverse() {
+    if (!this.head) return undefined;
+
+    let current = this.head;
+    let prev = null;
+    const oldHead = this.head;
+
+    while (current) {
+      // ex: 1 -> 2 -> 3
+      let next = current.next; // next is 2
+      current!.next = prev; // 1.next = null: 1 -> null
+
+      prev = current; // prev = 1
+      current = next!; // curr: 2
+    }
+
+    this.head = prev;
+    this.tail = oldHead;
+
+    return this;
+  }
 
   // Return the number of nodes
   size() {}
@@ -169,8 +191,22 @@ class LinkedList {
   clear() {}
 
   // Print all values (or return them as an array)
-  print() {}
+  print() {
+    console.log(this);
+  }
 
   // Convert the list to an array
   toArray() {}
 }
+
+const list = new LinkedList();
+
+list.append("1");
+list.append("2");
+
+console.log("before rev");
+list.print();
+
+console.log("after rev");
+list.reverse();
+list.print();
