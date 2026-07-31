@@ -77,7 +77,7 @@ class LinkedList {
       let temp = this.tail;
       temp!.next = newNode;
       this.tail = newNode;
-      
+
       return newNode;
     }
 
@@ -97,10 +97,49 @@ class LinkedList {
   }
 
   // Remove the first node
-  removeFirst() {}
+  removeFirst() {
+    if (!this.head) return undefined;
+
+    // ex: 1, removeFirst() -> null
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+      return this;
+    }
+
+    // ex: 1 -> 2 -> 3, removeFirst() -> 2 -> 3
+    let temp = this.head;
+    this.head = this.head!.next;
+    temp!.next = null;
+
+    return this;
+  }
 
   // Remove the last node
-  removeLast() {}
+  removeLast() {
+    if (!this.head) return undefined;
+
+    // ex: 1, removeLast(): null
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+
+      return this;
+    }
+
+    // ex: 1 -> 2, removeLast(): 1
+    // should get to prev of item we wanna remove
+    let current = this.head;
+    let prev = null;
+    for (let i = 0; i < this.length - 1; i++) {
+      prev = current;
+      current = current!.next!;
+    }
+
+    this.tail = prev;
+    prev!.next = null;
+    return this;
+  }
 
   // Remove a node by index
   remove(index: number) {}
